@@ -3,11 +3,11 @@
 @section('title', 'Home')
  
 @section('contents')
-<header class="bg-white shadow">
+{{-- <header class="bg-white shadow">
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-gray-900">
+        <h1 class="text-3xl font-bold text-gray-900"> --}}
             Home
-        </h1>
+        {{-- </h1>
     </div>
 </header>
 <hr />
@@ -19,5 +19,5 @@
             </div>
         </div>
     </div>
-</main>
+</main> --}}
 @endsection
