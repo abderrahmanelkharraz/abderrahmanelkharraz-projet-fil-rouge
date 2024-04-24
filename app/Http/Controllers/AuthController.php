@@ -55,6 +55,9 @@ class AuthController extends Controller
             'email' => trans('auth.failed')
         ]);
     }
+
+    $request->session()->regenerate();
+    
     if (auth()->user()->type == 'admin') {
         return redirect()->route('admin/home');
     } else {
@@ -71,3 +74,7 @@ class AuthController extends Controller
         return redirect('/login');
     }
 } 
+
+
+
+

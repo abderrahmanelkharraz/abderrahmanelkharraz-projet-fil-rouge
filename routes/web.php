@@ -30,7 +30,11 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'logout')->middleware('auth')->name('logout');
 
 });
-//Normal Users Routes List
+//Users Routes List
 Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
+//Admin Routes List
+Route::middleware(['auth', 'user-access:admin'])->group(function () {
+    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin/home');
 });
