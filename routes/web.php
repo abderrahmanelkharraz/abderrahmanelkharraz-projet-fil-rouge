@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -37,4 +39,6 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 //Admin Routes List
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin/home');
+    Route::get('/admin/profile',[AdminController::class,'profilepage'])->name('admin/profile');
+    Route::get('/admin/employers',[EmployerController::class,'index'])->name('admin/employers');
 });
