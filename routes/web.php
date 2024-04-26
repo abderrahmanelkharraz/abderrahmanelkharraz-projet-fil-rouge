@@ -41,4 +41,5 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin/home');
     Route::get('/admin/profile',[AdminController::class,'profilepage'])->name('admin/profile');
     Route::get('/admin/employers',[EmployerController::class,'index'])->name('admin/employers');
+    Route::get('/admin/employers/create', [EmployerController::class, 'create'])->name('admin/employers/create');
 });
