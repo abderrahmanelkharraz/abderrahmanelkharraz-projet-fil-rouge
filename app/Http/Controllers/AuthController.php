@@ -32,8 +32,7 @@ class AuthController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'type' => "0"
+            'password' => Hash::make($request->password)
         ]);
  
         return redirect()->route('login'); 
@@ -58,7 +57,7 @@ class AuthController extends Controller
 
     $request->session()->regenerate();
     
-    if (auth()->user()->type == 'admin') {
+    if (auth()->user()->role == 'admin') {
         return redirect()->route('admin/home');
     } else {
         return redirect()->route('home');

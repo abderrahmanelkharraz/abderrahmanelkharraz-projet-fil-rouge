@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -16,9 +17,11 @@ class HomeController extends Controller
         return view('home');
     }
  
-    public function adminHome()
+    public function getAllUsers()
     {
-        return view('dashboard');
+        $users = User::where('role', '!=', 'admin')->get();
+
+        return view('dashboard.users', ['users' => $users]);
     }
 }
 
