@@ -107,15 +107,24 @@
 
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <div class="text-sm leading-5 text-gray-900">{{$user->email}}</div>
+                                    <div class="text-sm leading-5 text-gray-900">{{$user->role}}</div>
                                 </td>
 
                                 <td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                     <!-- Replace 'Edit' link with a dropdown select -->
-                                    <select class="border-2 border-gray-200 rounded-md px-3 py-1" onchange="updateRole('{{ $user->id }}', this.value)">
-                                        <option value="Comptable" {{ $user->role === 'Comptable' ? 'selected' : '' }}>Comptable</option>
-                                        <option value="Aucun" {{ $user->role === 'Aucun' ? 'selected' : '' }}>Aucun</option>
-                                        <option value="Employer" {{ $user->role === 'Employer' ? 'selected' : '' }}>Employer</option>
+                                    <form action="/updateRole" method="Post">
+                                        @csrf
+                                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                                    <select class="border-2 border-gray-200 rounded-md px-3 py-1" name="role">
+                                        <option value="Comptable">Comptable</option>
+                                        <option value="Aucun">Aucun</option>
+                                        <option value="Employer" >Employer</option>
                                     </select>
+                                    <button type="submit">update</button>
+                                </form>
+                                </td>
+                                <td>
+                                    
                                 </td>
                             </tr>
                             @endforeach
