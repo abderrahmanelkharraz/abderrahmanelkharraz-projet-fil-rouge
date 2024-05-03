@@ -40,12 +40,12 @@ class User extends Authenticatable
     public function getRoleAttribute($value): string
     {
         $roles = [
-            'aucun' => 'Aucun',
+            'aucun' => 'aucun',
             'admin' => 'admin',
-            'employer' => 'Employer',
-            'comptable' => 'Comptable',
+            'employer' => 'employer',
+            'comptable' => 'comptable',
         ];
 
-        return $roles[$value] ?? 'Aucun';
+        return $roles[$value] ?? 'aucun';
     }
 }

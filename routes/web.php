@@ -33,7 +33,7 @@ Route::controller(AuthController::class)->group(function () {
 
 });
 //Users Routes List
-Route::middleware(['auth', 'user-access:user'])->group(function () {
+Route::middleware(['auth', 'user-access:employer'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 //Admin Routes List
