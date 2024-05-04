@@ -12,7 +12,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
-    <form method="post" action="{{ route('handleLogin') }}">
+    <form method="post" action="{{ route('submitDefineAccess', $email) }}">
 
         @csrf
         @method('POST')
@@ -35,26 +35,33 @@
             </div>
             <div class="right">
 
-                <h4>Espace administrateur</h4>
+                <h4>Définissez vos accès</h4>
 
                 @if (Session::get('success_msg'))
                     <div class="success_span">{{ Session::get('success_msg') }}</div>
                 @endif
-                <input type="email" name="email" class="email" value="{{ old('email') }}" />
-                @error('email')
-                    <div class="error_span">{{ $message }}</div>
+                <input type="email" name="email" class="email" value="{{ $email }}" readonly />
+
+                <input type="text" name="code" class="email" value="{{ old('code') }}"
+                    placeholder="saisir le code recu par email" />
+
+                @error('code')
+                    <span class="text text-danger">{{ $message }}</span>
                 @enderror
 
-                <input type="password" name="password" class="email" />
+                <input type="password" name="password" placeholder="Nouveau mot de passe"  />
 
                 @error('password')
                     <div class="error_span">{{ $message }}</div>
                 @enderror
 
-
+                <input type="password" name="confirm_password" placeholder="Mot de passe de confirmation" />
+                @error('confirm_password')
+                    <span class="text text-danger">{{ $message }}</span>
+                @enderror
 
                 <div class="btn-container">
-                    <button type="submit"> Connexion</button>
+                    <button type="submit"> Valider</button>
                 </div>
             </div>
             <!-- End Btn -->
