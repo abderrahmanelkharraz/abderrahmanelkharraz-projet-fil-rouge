@@ -5,24 +5,25 @@
     <hr class="mb-4">
     <div class="row g-4 settings-section">
         <div class="col-12 col-md-4">
-            <h3 class="section-title">Ajout</h3>
-            <div class="section-intro">Ajouter ici un nouvel employer</div>
+            <h3 class="section-title">Edition</h3>
+            <div class="section-intro">Editer un employer</div>
         </div>
         <div class="col-12 col-md-8">
             <div class="app-card app-card-settings shadow-sm p-4">
 
                 <div class="app-card-body">
-                    <form class="settings-form" method="POST" action="{{ route('employe.store') }}">
+                    <form class="settings-form" method="POST" action="{{ route('employe.update', $employer->id) }}">
                         @csrf
-                        @method('POST')
+                        @method('PUT')
 
                         <div class="mb-3">
                             <label for="setting-input-3" class="form-label">Departement</label>
                             <select name="departement_id" id="departement_id" class="form-control">
                                 <option value=""></option>
-
                                 @foreach ($departements as $departement)
-                                    <option value="{{ $departement->id }}">{{ $departement->name }}</option>
+                                    <option value="{{ $departement->id }}"
+                                        {{ $employer->departement_id === $departement->id ? 'selected' : '' }}>
+                                        {{ $departement->name }}</option>
                                 @endforeach
 
                             </select>
@@ -47,7 +48,7 @@
                                         <circle cx="8" cy="4.5" r="1" />
                                     </svg></span></label>
                             <input type="text" class="form-control" id="setting-input-1" placeholder="Entrer le nom"
-                                name="nom" value="{{ old('nom') }}" required>
+                                name="nom" value="{{ $employer->nom }}" required>
 
 
                             @error('nom')
@@ -57,12 +58,12 @@
                         <div class="mb-3">
                             <label for="setting-input-2" class="form-label">Prenom</label>
                             <input type="text" class="form-control" id="setting-input-2" name="prenom"
-                                placeholder="Entrer le prenom" value="{{ old('prenom') }}" required>
+                                placeholder="Entrer le prenom" value="{{ $employer->prenom }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="setting-input-3" class="form-label">Email</label>
                             <input type="email" class="form-control" id="setting-input-3" name="email"
-                                placeholder="Entrer le mail" value="{{ old('email') }}">
+                                placeholder="Entrer le mail" value="{{ $employer->email }}">
 
 
                             @error('email')
@@ -72,24 +73,24 @@
                         <div class="mb-3">
                             <label for="setting-input-3" class="form-label">Contact</label>
                             <input type="text" class="form-control" id="setting-input-3" name="contact"
-                                placeholder="Entrer le contact" value="{{old('contact')}}">
+                                placeholder="Entrer le contact" value="{{ $employer->contact }}">
 
-                                
+
                             @error('contact')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="setting-input-3" class="form-label">Montant à journalier</label>
                             <input type="number" class="form-control" id="setting-input-3" name="montant_journalier"
-                              value="{{old('montant_journalier')}}"  placeholder="Entrer le montant journalier">
+                                value="{{ $employer->montant_journalier }}" placeholder="Entrer le montant journalier">
 
-                                
+
                             @error('montant_journalier')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <button type="submit" class="btn app-btn-primary">Enregistrer</button>
+                        <button type="submit" class="btn app-btn-primary">Mettre a jour</button>
                     </form>
                 </div>
                 <!--//app-card-body-->
