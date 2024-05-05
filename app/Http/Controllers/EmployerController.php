@@ -2,71 +2,76 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreEmployeRequest;
+use App\Http\Requests\UpdateEmployerRequest;
+use App\Models\Departement;
+use App\Models\Employer;
+use Exception;
 
 class EmployerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('employers.index');
+        $employers = Employer::with('departement')->paginate(10);
+        return view('employers.index', compact('employers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        return view('employers.create');
+        $departements = Departement::all();
+        return view('employers.create', compact('departements'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function edit(Employer $employer)
     {
-        //
+        $departements = Departement::all();
+        return view('employers.edit', compact('employer', 'departements'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+
+    public function store(StoreEmployeRequest $request)
     {
-        //
+        try {
+            $query = Employer::create($request->all());
+            if ($query) {
+                return redirect()->route('employer.index')->with('success_message', 'Employer ajouté');
+            }
+        } catch (Exception $e) {
+            dd($e);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(UpdateEmployerRequest $request, Employer $employer)
     {
-        //
+        try {
+            $employer->nom = $request->nom;
+            $employer->prenom = $request->prenom;
+            $employer->email = $request->email;
+            $employer->contact = $request->contact;
+            $employer->departement_id = $request->departement_id;
+            $employer->montant_journalier = $request->montant_journalier;
+
+
+            $employer->update();
+
+
+            return redirect()->route('employer.index')->with('success_message', 'Les informations de l\'employer ont été mise à jour');
+        } catch (Exception $e) {
+            dd($e);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request)
-    {
-       $user=User::find($request->user_id);
-    //    dd($request);
-        $user->role=$request->role;
-        $user->save();
-        return redirect()->back();
-        // dd($request);
 
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function delete(Employer $employer)
     {
-        //
+        try {
+            $employer->delete();
+
+            return redirect()->route('employer.index')->with('success_message', 'Employer retirer');
+        } catch (Exception $e) {
+            dd($e);
+        }
     }
 }
